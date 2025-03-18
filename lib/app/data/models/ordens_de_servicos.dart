@@ -23,6 +23,9 @@ class OrdemDeServico {
     required this.dateReschedule,
   });
 
+  //Mapa feito para converter os dados vindo da API,
+  // ClientName inicado como null pois so vai receber valor após
+  // o primeiro consumo da APi
   factory OrdemDeServico.fromMap(Map<String, dynamic> map) {
     return OrdemDeServico(
       id: int.tryParse(map['id'].toString()) ?? 0,
@@ -37,6 +40,7 @@ class OrdemDeServico {
     );
   }
 
+  //Adicionado o nome do cliente apos já ter o codigo do cliente
   Future<OrdemDeServico> fetchClientName() async {
     String? name = await buscarClientePorId(clientId);
     return OrdemDeServico(
@@ -52,6 +56,7 @@ class OrdemDeServico {
     );
   }
 
+  //Faz a transformação das listas vindo da API para uma lista de OrdemDeServico
   static List<OrdemDeServico> fromJsonList(Map<String, dynamic> json) {
     if (json['registros'] == null) return [];
     return List<OrdemDeServico>.from(
